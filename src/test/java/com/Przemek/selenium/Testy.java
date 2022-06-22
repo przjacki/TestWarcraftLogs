@@ -8,7 +8,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
-
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -24,7 +23,7 @@ public class Testy {
         driver.navigate().to("https://www.warcraftlogs.com/");
 
         List<WebElement> cookieButtons = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//button[@mode='secondary']")));
-        cookieButtons.get(0).click();
+        cookieButtons.get(2).click();
         WebElement search = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='searchfield-mini']")));
         search.sendKeys("Pudzianos");
         List<WebElement> chooseFirst = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//li[@class='ui-menu-item']")));
@@ -34,25 +33,33 @@ public class Testy {
         List<WebElement> zoneList = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//a[contains(@id,\"zone\")]")));
         int zoneListSize = zoneList.size() - 2;
         //int randomNumber = ThreadLocalRandom.current().nextInt(0, zoneListSize);
-        int randomNumber = 2;
+        int randomNumber = 3;
         zoneList.get(randomNumber).click();
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//div[@class = \"zone-table-and-loading-container\"]")));
         List<WebElement> bossesNameForSize = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//a[contains(@class,\"Boss zone-boss-cell\")]")));
         int bossesSize = bossesNameForSize.size();
         //String bossNameByOrder = bossesName.get(0).getText();
         //String parsePercent = bossesParse.get(0).getText();
+        List<WebElement> bossesParse = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//td[contains(@class,\"rank-percent hist\")]")));
+        List<WebElement> bossesName = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//a[contains(@class,\"Boss zone-boss-cell\")]")));
         System.out.println("Boss name " + "|" + " Parse");
         //System.out.println(bossNameByOrder + " " + parsePercent);
-
         for (int x = 0; x < bossesSize; x++) {
-            List<WebElement> bossesParse = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//td[contains(@class,\"rank-percent hist\")]")));
-            List<WebElement> bossesName = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//a[contains(@class,\"Boss zone-boss-cell\")]")));
-            String bossNameByOrder = bossesName.get(x).getText();
-            String parsePercent = bossesParse.get(x).getText();
-            System.out.println(bossNameByOrder + " " + parsePercent + " x = " + x + " bossesSize = " + bossesSize);
+            try {
+                String bossNameByOrder = bossesName.get(x).getText();
+                String parsePercent = bossesParse.get(x).getText();
+                System.out.println(bossNameByOrder + " " + parsePercent + " x = " + x + " bossesSize = " + bossesSize);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Problemy z petlą");
+            }
         }
-        //driver.quit();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//span[@id='update-spinner']")));
+        WebElement update = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@id='update-link']")));
+        update.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@id='update-spinner']")));
 
     }
+    //driver.quit();
 
 }
