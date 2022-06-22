@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: com.Przemek.selenium.Testy
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.727 sec <<< FAILURE!
+Test1(com.Przemek.selenium.Testy)  Time elapsed: 1.479 sec  <<< FAILURE!
+java.lang.NoSuchMethodError: org.openqa.selenium.support.ui.WebDriverWait.<init>(Lorg/openqa/selenium/WebDriver;Ljava/time/Duration;)V
+	at com.Przemek.selenium.Testy.Test1(Testy.java:21)
+
